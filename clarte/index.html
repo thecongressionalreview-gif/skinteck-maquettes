@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SKINTECK Maquette Clarté</title>
-<meta name="description" content="SKINTECK, cabinet dermo-esthétique avancé à Marseille 6e. Diagnostic, soins du visage, silhouette, cheveux et épilation laser : comprendre avant de traiter.">
+<meta name="description" content="SKINTECK, cabinet dermo-esthétique à Marseille 6e. Visage, silhouette, cheveux : on prend le temps de comprendre votre besoin avant de vous proposer un soin.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#fbfbfd">
 <link rel="stylesheet" href="assets/style.css">
@@ -17,10 +17,10 @@
   <div class="nav__in">
     <a class="logo" href="index.html" aria-label="SKINTECK, accueil"><img src="assets/img/logo.png" alt=""></a>
     <nav class="links" aria-label="Navigation principale">
+      <a href="#besoin">Votre besoin</a>
       <a href="diagnostic.html">Diagnostic</a>
       <a href="#soins">Soins</a>
-      <a href="#cabinet">Le cabinet</a>
-      <a href="#fondateur">Vincent</a>
+      <a href="cabinet.html">Le cabinet</a>
       <a href="#" data-off>Journal</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -32,105 +32,109 @@
 </header>
 
 <div class="menu" id="menu">
+  <a href="#besoin">Votre besoin</a>
   <a href="diagnostic.html">Diagnostic</a>
   <a href="#soins">Soins</a>
-  <a href="#cabinet">Le cabinet</a>
-  <a href="#fondateur">Vincent</a>
+  <a href="cabinet.html">Le cabinet</a>
   <a href="#" data-off>Journal</a>
   <a href="#contact">Contact</a>
   <a href="#" data-off>Prendre rendez-vous</a>
 </div>
 
 <main id="main">
+  <!-- 1. Hero : le lieu, la promesse -->
   <section class="hero">
     <div class="wrap">
-      <p class="kicker">SKINTECK · Marseille</p>
+      <p class="kicker">Cabinet dermo-esthétique · Marseille 6ᵉ</p>
       <h1>Comprendre avant de traiter.</h1>
-      <p class="lede lead">Votre peau. Votre parcours. Votre éclat.</p>
+      <p class="lede lead">Visage, silhouette, cheveux. Avant de vous proposer un soin, on prend le temps de comprendre ce qui vous gêne.</p>
       <div class="actions">
-        <a class="btn" href="#" data-off>Réserver mon diagnostic</a>
-        <a class="more-link" href="diagnostic.html">Découvrir le diagnostic</a>
+        <a class="btn" href="#" data-off>Prendre rendez-vous</a>
+        <a class="more-link" href="#bienvenue">Découvrir SKINTECK</a>
       </div>
     </div>
-    <div class="hero__img"><img src="assets/img/hero.webp" alt="Le poste de diagnostic Smart Skin Pro sous le caducée lumineux du cabinet SKINTECK" fetchpriority="high" style="object-position:50% 0"></div>
+    <div class="hero__img"><img src="assets/img/lounge.webp" alt="Le salon d’accueil du cabinet SKINTECK, poutres apparentes et lumière douce" fetchpriority="high" style="object-position:50% 58%"></div>
     <div class="wrap">
       <ul class="facts">
-        <li><strong>30 €</strong>Déduits si un soin est réalisé</li>
+        <li><strong>227 rue Paradis</strong>Marseille 6ᵉ</li>
+        <li><strong>Diagnostic 30 €</strong>Déduits si un soin est réalisé</li>
         <li><strong>Sans engagement</strong>Le diagnostic n’oblige à aucun soin</li>
-        <li><strong>227 rue Paradis</strong>13006 Marseille</li>
         <li><strong>Sur rendez-vous</strong>Lun–ven 10h–19h30, sam 10h–17h</li>
       </ul>
     </div>
   </section>
 
-  <section class="sec black" id="diagnostic">
+  <!-- 2. Bienvenue chez SKINTECK -->
+  <section class="sec" id="bienvenue">
     <div class="wrap">
       <div class="center">
-        <p class="kicker">SKINTECK ANALYSIS™</p>
-        <h2 class="title gentle">Deux technologies.<br>Une seule décision.</h2>
-        <p class="lead">Le diagnostic ne sert pas à vous orienter automatiquement vers un soin. Il sert à déterminer ce qui est réellement pertinent pour vous.</p>
+        <p class="kicker">Bienvenue chez SKINTECK</p>
+        <h2 class="title gentle">Un cabinet où l’on vous écoute avant d’agir.</h2>
       </div>
-      <div class="tiles">
-        <article class="tile tile--dark gentle">
-          <div class="tile__txt"><h3>Smart Skin Pro</h3><p class="sub">Une imagerie assistée par intelligence artificielle pour observer les rides, les taches, les pores, l’hydratation et les imperfections.</p></div>
-          <div class="tile__img"><img loading="lazy" src="assets/img/smart-skin.webp" alt="L’appareil d’analyse Smart Skin Pro sur le bureau du cabinet" style="object-position:50% 72%"></div>
-        </article>
-        <article class="tile tile--dark gentle">
-          <div class="tile__txt"><h3>Anovator</h3><p class="sub">Une analyse corporelle pour évaluer la silhouette, identifier les zones à accompagner et suivre leur évolution avec des mesures de référence.</p></div>
-          <div class="tile__img"><img loading="lazy" src="assets/img/anovator.webp" alt="La borne d’analyse corporelle Anovator dans le cabinet" style="object-position:50% 58%"></div>
-        </article>
-      </div>
-      <div class="pricecard">
-        <b>30 €</b>
-        <p>Déduits si vous réalisez ensuite un soin. Le diagnostic ne vous engage à rien.</p>
-        <a class="btn" href="#" data-off>Réserver</a>
+      <div class="trio">
+        <article class="tile gentle"><div class="tile__txt"><p class="tagline">Ce que c’est</p><h3>Un vrai lieu, à Marseille.</h3><p class="sub">Un cabinet calme et chaleureux, au cœur du 6ᵉ arrondissement. Pas une chaîne, pas une usine à soins.</p></div></article>
+        <article class="tile gentle"><div class="tile__txt"><p class="tagline">Pour qui</p><h3>Pour vous, femme ou homme.</h3><p class="sub">Pour toute personne qu’une zone gêne : le visage, la peau, la silhouette, les cheveux. Même si vous ne savez pas quoi choisir.</p></div></article>
+        <article class="tile gentle"><div class="tile__txt"><p class="tagline">Ce qu’on y fait</p><h3>On comprend, puis on agit.</h3><p class="sub">On analyse d’abord votre besoin. Ensuite seulement, on vous propose ce qui a du sens pour vous, et rien de plus.</p></div></article>
       </div>
     </div>
   </section>
 
-  <section class="sec grey" id="commencer">
+  <!-- 3. Le besoin du client -->
+  <section class="sec grey" id="besoin">
     <div class="wrap">
       <div class="center">
-        <h2 class="title gentle">Par quoi commencer ?</h2>
+        <p class="kicker">Votre besoin</p>
+        <h2 class="title gentle">Qu’est-ce qui vous gêne ?</h2>
+        <p class="lead">Vous n’avez pas besoin de connaître le nom d’un soin. Choisissez ce qui vous ressemble.</p>
       </div>
-      <div class="chips" role="tablist" aria-label="Votre préoccupation">
-        <button class="chip" role="tab" id="c-diag" data-key="diag" aria-selected="true" aria-controls="panel">Je ne sais pas encore</button>
-        <button class="chip" role="tab" id="c-lift" data-key="lift" aria-selected="false" tabindex="-1" aria-controls="panel">Fermeté du visage</button>
-        <button class="chip" role="tab" id="c-pure" data-key="pure" aria-selected="false" tabindex="-1" aria-controls="panel">Pores visibles</button>
-        <button class="chip" role="tab" id="c-regen" data-key="regen" aria-selected="false" tabindex="-1" aria-controls="panel">Texture de peau</button>
-        <button class="chip" role="tab" id="c-peel" data-key="peel" aria-selected="false" tabindex="-1" aria-controls="panel">Taches et teint</button>
-        <button class="chip" role="tab" id="c-sculpt" data-key="sculpt" aria-selected="false" tabindex="-1" aria-controls="panel">Silhouette</button>
-        <button class="chip" role="tab" id="c-density" data-key="density" aria-selected="false" tabindex="-1" aria-controls="panel">Cheveux et barbe</button>
-        <button class="chip" role="tab" id="c-laser" data-key="laser" aria-selected="false" tabindex="-1" aria-controls="panel">Pilosité</button>
+      <div class="chips" role="tablist" aria-label="Ce qui vous gêne">
+        <button class="chip" role="tab" id="c-diag" data-key="diag" aria-selected="true" aria-controls="panel">Je ne sais pas par où commencer</button>
+        <button class="chip" role="tab" id="c-lift" data-key="lift" aria-selected="false" tabindex="-1" aria-controls="panel">Mon visage se relâche</button>
+        <button class="chip" role="tab" id="c-pure" data-key="pure" aria-selected="false" tabindex="-1" aria-controls="panel">Ma peau est terne</button>
+        <button class="chip" role="tab" id="c-regen" data-key="regen" aria-selected="false" tabindex="-1" aria-controls="panel">Ma peau a perdu en qualité</button>
+        <button class="chip" role="tab" id="c-peel" data-key="peel" aria-selected="false" tabindex="-1" aria-controls="panel">J’ai des taches</button>
+        <button class="chip" role="tab" id="c-sculpt" data-key="sculpt" aria-selected="false" tabindex="-1" aria-controls="panel">Une zone résiste malgré le sport</button>
+        <button class="chip" role="tab" id="c-density" data-key="density" aria-selected="false" tabindex="-1" aria-controls="panel">Mes cheveux s’affinent</button>
+        <button class="chip" role="tab" id="c-laser" data-key="laser" aria-selected="false" tabindex="-1" aria-controls="panel">Je veux moins de poils</button>
       </div>
       <article class="panel" id="panel" role="tabpanel" aria-labelledby="c-diag" aria-live="polite">
-        <div class="panel__img"><img src="assets/img/consult.webp" alt="Diagnostic de peau sur Smart Skin Pro" loading="lazy"></div>
+        <div class="panel__img"><img src="assets/img/consult.webp" alt="Échange devant le poste d’analyse de peau" loading="lazy"></div>
         <div class="panel__txt">
-          <p class="tagline" data-f="tag">Le bon point de départ</p>
-          <h3 data-f="name">SKINTECK ANALYSIS™</h3>
-          <p class="sub" data-f="text">Vous n’avez pas besoin de connaître le nom d’un protocole avant de réserver. Venez avec votre préoccupation et votre objectif.</p>
+          <p class="tagline" data-f="tag">C’est normal</p>
+          <h3 data-f="name">Commencez par comprendre.</h3>
+          <p class="sub" data-f="text">Venez avec ce qui vous gêne. On regarde, on vous explique ce qu’on voit, puis on décide ensemble de ce qui est utile.</p>
           <dl>
-            <div><dt>Le protocole</dt><dd data-f="proto">Échange, observation professionnelle et technologies d’analyse</dd></div>
+            <div><dt>Ce qui change ici</dt><dd data-f="adv">Un vrai temps d’analyse, sans obligation de faire un soin.</dd></div>
+            <div><dt>La solution</dt><dd data-f="proto">Échange + SKINTECK ANALYSIS™, notre diagnostic peau ou silhouette</dd></div>
             <div><dt>Tarif indicatif</dt><dd data-f="price">30 €, déduits si vous réalisez ensuite un soin</dd></div>
           </dl>
           <div class="acts"><a class="more-link" data-f="cta" href="diagnostic.html">Découvrir le diagnostic</a></div>
         </div>
       </article>
-      <p class="note">Une première orientation, pas une prescription : le protocole et le nombre de séances sont confirmés après analyse.</p>
+      <p class="note">Une première piste, pas une prescription. Le soin et le nombre de séances sont confirmés après analyse.</p>
     </div>
   </section>
 
+  <!-- 4. Comprendre avant de traiter -->
+  <section class="sec black center">
+    <div class="wrap">
+      <p class="kicker">Comprendre avant de traiter</p>
+      <p class="question">Vous ne pensez pas <s>« J’ai besoin d’un HIFU. »</s> Vous pensez « Mon visage se relâche. » <span class="dim">C’est par là que nous commençons.</span></p>
+    </div>
+  </section>
+
+  <!-- 5. La méthode -->
   <section class="method" aria-label="La méthode SKINTECK">
     <div class="method__pin">
       <div class="wrap method__grid">
         <div>
-          <p class="kicker">La méthode</p>
-          <h2 class="title">Un protocole ne commence jamais par une machine.</h2>
+          <p class="kicker">La méthode SKINTECK</p>
+          <h2 class="title">On analyse d’abord. On traite ensuite.</h2>
           <ol class="steplist">
-            <li class="on"><h3>Analyser</h3><p>Observer la peau, la silhouette ou le cuir chevelu avec précision.</p></li>
-            <li><h3>Comprendre</h3><p>Identifier les besoins réels, les priorités et les objectifs possibles.</p></li>
-            <li><h3>Construire</h3><p>Associer les technologies et définir un protocole cohérent.</p></li>
-            <li><h3>Accompagner</h3><p>Suivre l’évolution et ajuster la prise en charge si nécessaire.</p></li>
+            <li class="on"><h3>Écouter</h3><p>Vous nous dites ce qui vous gêne et ce que vous aimeriez changer.</p></li>
+            <li><h3>Analyser</h3><p>On observe votre peau, votre silhouette ou vos cheveux, avec des outils précis.</p></li>
+            <li><h3>Expliquer</h3><p>On vous dit simplement ce qu’on voit : ce qui compte, ce qui peut attendre, et ce qui n’a pas besoin de soin.</p></li>
+            <li><h3>Accompagner</h3><p>On construit un plan pour vous, on mesure vos progrès et on ajuste.</p></li>
           </ol>
         </div>
         <div class="shots" aria-hidden="true">
@@ -143,51 +147,115 @@
     </div>
   </section>
 
+  <!-- 6. Le diagnostic -->
+  <section class="sec black" id="diagnostic">
+    <div class="wrap">
+      <div class="center">
+        <p class="kicker">SKINTECK ANALYSIS™</p>
+        <h2 class="title gentle">Mesurer plutôt que deviner.</h2>
+        <p class="lead">J’utilise des outils d’analyse pour une raison simple : voir ce que l’œil seul ne voit pas, et suivre vos progrès avec des chiffres. Ils sont choisis pour leur intérêt scientifique, pas pour impressionner.</p>
+      </div>
+      <div class="tiles">
+        <article class="tile tile--dark gentle">
+          <div class="tile__txt"><p class="tagline">Visage et cheveux</p><h3>Voir votre peau en détail.</h3><p class="sub">Une imagerie du visage montre les rides, les taches, les pores et l’hydratation. <span class="tech">Smart Skin Pro</span></p></div>
+          <div class="tile__img"><img loading="lazy" src="assets/img/smart-skin.webp" alt="L’appareil d’analyse du visage Smart Skin Pro sur le bureau du cabinet" style="object-position:50% 72%"></div>
+        </article>
+        <article class="tile tile--dark gentle">
+          <div class="tile__txt"><p class="tagline">Silhouette</p><h3>Mesurer pour suivre vos progrès.</h3><p class="sub">Une analyse du corps repère les zones à travailler et donne des mesures de départ. <span class="tech">Anovator</span></p></div>
+          <div class="tile__img"><img loading="lazy" src="assets/img/anovator.webp" alt="La borne d’analyse corporelle Anovator dans le cabinet" style="object-position:50% 58%"></div>
+        </article>
+      </div>
+      <div class="pricecard">
+        <b>30 €</b>
+        <p>Déduits si vous réalisez ensuite un soin. Le diagnostic ne vous engage à rien, et on vous dit aussi quand un soin n’est pas utile.</p>
+        <a class="btn" href="#" data-off>Réserver mon diagnostic</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Les solutions -->
   <section class="sec grey" id="soins" style="padding-inline:0">
     <div class="wrap gal__head">
       <div>
-        <p class="kicker">Les soins Signature</p>
-        <h2 class="title">Vous ne choisissez pas une machine.</h2>
+        <p class="kicker">Les solutions</p>
+        <h2 class="title">Un résultat d’abord. Une technologie ensuite.</h2>
+        <p class="lead lead--left">Chaque protocole part de ce que vous voulez changer. La technologie n’est que le moyen.</p>
       </div>
     </div>
     <div class="gal" tabindex="0" aria-label="Les six protocoles Signature">
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Visage · Fermeté</p><h3>LIFT™</h3><p>Raffermissement par stimulation du collagène en profondeur. HIFU par ultrasons focalisés + LED.</p><p class="price">1 zone 220 € · 2 zones 400 € · 3 zones 560 €</p></div><div class="card__img"><img loading="lazy" src="assets/img/lift.webp" alt="Séance de HIFU sur le visage"></div></a>
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Visage · Pureté</p><h3>PURE™</h3><p>Nettoyage profond, désobstruction des pores et réhydratation. Hydrodermabrasion AquaPeel + actifs + LED.</p><p class="price">95 € · 270 € · 510 € (1, 3 ou 6 séances)</p></div><div class="card__img"><img loading="lazy" src="assets/img/pure.webp" alt="Hydrodermabrasion du visage"></div></a>
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Visage · Régénération</p><h3>REGEN™</h3><p>Amélioration progressive de la qualité de peau et de la texture. Microneedling + actifs + LED.</p><p class="price">150 € · 420 € · 780 € (1, 3 ou 6 séances)</p></div><div class="card__img"><img loading="lazy" src="assets/img/regen.webp" alt="Microneedling du visage"></div></a>
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Visage · Éclat</p><h3>PEEL™</h3><p>Éclat et correction du teint irrégulier, des taches et du grain de peau. Peeling professionnel + actifs + LED.</p><p class="price">120 € · 330 € · 600 € selon protocole et séances</p></div><div class="card__img"><img loading="lazy" src="assets/img/peel.webp" alt="Préparation d’un peeling professionnel"></div></a>
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Corps · Silhouette</p><h3>SCULPT™</h3><p>Amas graisseux localisés, tonicité et drainage. Cryolipolyse + Lipo HIFU + électrostimulation + pressothérapie.</p><p class="price">890 € le programme de 6 semaines</p></div><div class="card__img"><img loading="lazy" src="assets/img/sculpt.webp" alt="Séance d’électrostimulation"></div></a>
-      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">Cheveux &amp; barbe · Densité</p><h3>DENSITY™</h3><p>Qualité, résistance et apparence de densité. Hydrodermabrasion du cuir chevelu + microneedling + LED.</p><p class="price">Cure initiale 590 € · Cure complète 990 € à 1 190 €</p></div><div class="card__img"><img loading="lazy" src="assets/img/density.webp" alt="Soin du cuir chevelu réalisé par Vincent"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« Mon visage se relâche »</p><h3>Un visage plus ferme.</h3><p>Des traits plus nets et un air plus reposé, progressivement.</p><p class="tech"><b>LIFT™</b> · HIFU (ultrasons) + LED</p><p class="price">1 zone 220 € · 2 zones 400 € · 3 zones 560 €</p></div><div class="card__img"><img loading="lazy" src="assets/img/lift.webp" alt="Séance de HIFU sur le visage"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« Ma peau est terne »</p><h3>Une peau nette et lumineuse.</h3><p>Des pores moins visibles et une peau qui respire à nouveau.</p><p class="tech"><b>PURE™</b> · Hydrodermabrasion + actifs + LED</p><p class="price">95 € · 270 € · 510 € (1, 3 ou 6 séances)</p></div><div class="card__img"><img loading="lazy" src="assets/img/pure.webp" alt="Hydrodermabrasion du visage"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« Ma peau a perdu en qualité »</p><h3>Une peau plus lisse.</h3><p>Un grain de peau plus fin et plus uniforme, séance après séance.</p><p class="tech"><b>REGEN™</b> · Microneedling + actifs + LED</p><p class="price">150 € · 420 € · 780 € (1, 3 ou 6 séances)</p></div><div class="card__img"><img loading="lazy" src="assets/img/regen.webp" alt="Microneedling du visage"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« J’ai des taches »</p><h3>Un teint plus uniforme.</h3><p>Moins de taches visibles et plus d’éclat.</p><p class="tech"><b>PEEL™</b> · Peeling professionnel + actifs + LED</p><p class="price">120 € · 330 € · 600 € selon protocole et séances</p></div><div class="card__img"><img loading="lazy" src="assets/img/peel.webp" alt="Préparation d’un peeling professionnel"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« Cette zone résiste au sport »</p><h3>Une silhouette plus tonique.</h3><p>On cible les zones qui ne bougent pas, et on mesure les progrès.</p><p class="tech"><b>SCULPT™</b> · Cryolipolyse + Lipo HIFU + électrostimulation + pressothérapie</p><p class="price">890 € le programme de 6 semaines</p></div><div class="card__img"><img loading="lazy" src="assets/img/sculpt.webp" alt="Séance d’électrostimulation"></div></a>
+      <a class="card" href="#" data-off><div class="card__txt"><p class="tagline">« Mes cheveux s’affinent »</p><h3>Des cheveux plus denses.</h3><p>Des cheveux ou une barbe qui paraissent plus forts et plus fournis.</p><p class="tech"><b>DENSITY™</b> · Soin du cuir chevelu + microneedling + LED</p><p class="price">Cure initiale 590 € · Cure complète 990 € à 1 190 €</p></div><div class="card__img"><img loading="lazy" src="assets/img/density.webp" alt="Soin du cuir chevelu réalisé par Vincent"></div></a>
     </div>
     <div class="wrap">
       <div class="arrows"><button data-gal="prev" aria-label="Protocoles précédents">‹</button><button data-gal="next" aria-label="Protocoles suivants">›</button></div>
-      <p class="fine">Tarifs indicatifs. Le protocole et le nombre de séances sont confirmés selon vos besoins après analyse.</p>
+      <p class="fine">Tarifs indicatifs. Le protocole et le nombre de séances sont confirmés après analyse.</p>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
-      <div class="center"><h2 class="title gentle">Autres expertises du cabinet.</h2></div>
+      <div class="center"><h2 class="title gentle">Aussi au cabinet.</h2></div>
       <div class="trio">
-        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Soins combinés</h3><p class="sub">Une technologie réalisée par Vincent et un soin manuel Renata França réalisé par Ingrid ou Émilie, au cours d’un même rendez-vous.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/salle.webp" alt="Salle de soin aux murs de pierre"></div></a>
-        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Épilation laser diode</h3><p class="sub">Une réduction progressive de la pilosité, avec des paramètres ajustés au phototype, à la zone et au cycle du poil.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/laser.webp" alt="Salle de soin avec le laser diode Neocure"></div></a>
-        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Skin Program™, 59 €</h3><p class="sub">Une bonne routine n’est pas celle qui contient le plus de produits. C’est celle qui répond à votre peau et que vous pouvez réellement suivre.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/routine.webp" alt="Vincent construit une routine avec une cliente" style="object-position:50% 70%"></div></a>
+        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Soins combinés</h3><p class="sub">Une technologie et un soin manuel Renata França, dans le même rendez-vous. Avec Ingrid ou Émilie.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/salle.webp" alt="Salle de soin aux murs de pierre"></div></a>
+        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Épilation laser</h3><p class="sub">Moins de poils, progressivement. Les réglages sont adaptés à votre peau et à chaque zone.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/laser.webp" alt="Salle de soin avec le laser diode Neocure"></div></a>
+        <a class="tile gentle" href="#" data-off><div class="tile__txt"><h3>Skin Program™, 59 €</h3><p class="sub">Une routine simple, faite pour votre peau, que vous pouvez vraiment suivre chez vous.</p></div><div class="tile__img"><img loading="lazy" src="assets/img/routine.webp" alt="Vincent construit une routine avec une cliente" style="object-position:50% 70%"></div></a>
       </div>
     </div>
   </section>
 
+  <!-- 8. Le cabinet et l'humain -->
   <section class="stage" id="cabinet">
-    <img loading="lazy" src="assets/img/lounge.webp" alt="Le salon du cabinet SKINTECK sous les poutres apparentes">
+    <img loading="lazy" src="assets/img/hero.webp" alt="L’accueil du cabinet SKINTECK sous le caducée lumineux">
     <div class="stage__t">
       <p class="kicker" style="color:rgba(255,255,255,.85)">Le cabinet</p>
-      <h2 class="title">Au cœur du 6ᵉ arrondissement.</h2>
+      <h2 class="title">Un lieu fait pour prendre le temps.</h2>
+      <p class="lead" style="color:rgba(255,255,255,.85)">Pierre, bois, lumière douce. Au 227 rue Paradis, dans le 6ᵉ.</p>
     </div>
   </section>
 
+  <section class="sec" id="fondateur">
+    <div class="wrap founder">
+      <div class="founder__img gentle"><img loading="lazy" src="assets/img/vincent-client.webp" alt="Vincent Ingrassia analyse la peau d’une cliente au cabinet SKINTECK" style="object-position:50% 30%"></div>
+      <div>
+        <p class="kicker">Qui vous reçoit</p>
+        <h2 class="title">Je m’appelle Vincent.</h2>
+        <p class="quote">« Mon parcours initial dans le soin a façonné ma manière d’aborder la dermo-esthétique : observer, comprendre, expliquer et personnaliser avant d’agir. »</p>
+        <p>J’ai créé SKINTECK pour que chaque personne reparte en comprenant sa peau, et pas seulement avec un soin. Au cabinet, je travaille avec Ingrid et Émilie.</p>
+        <div class="acts"><a class="more-link" href="cabinet.html">Mon histoire et le cabinet</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Confiance -->
+  <section class="sec grey">
+    <div class="wrap">
+      <div class="center">
+        <p class="kicker">No miracles, just science.</p>
+        <h2 class="title gentle">Pourquoi nous faire confiance.</h2>
+      </div>
+      <ul class="bring">
+        <li><b>Un regard formé au soin.</b> Un parcours initial dans le soin : observation, rigueur, écoute.</li>
+        <li><b>Toujours un diagnostic d’abord.</b> Aucun protocole n’est proposé sans analyse.</li>
+        <li><b>Des outils choisis avec soin.</b> Des technologies retenues pour leur intérêt scientifique.</li>
+        <li><b>La vérité, même si c’est non.</b> On vous dit aussi quand un soin n’est pas utile pour vous.</li>
+      </ul>
+      <p class="limit">SKINTECK est un cabinet de dermo-esthétique. Le diagnostic ne remplace pas un avis médical : si besoin, nous vous orientons vers un médecin.</p>
+    </div>
+  </section>
+
+  <!-- 10. Rendez-vous -->
   <section class="sec black" id="contact">
     <div class="wrap visit">
       <video data-autoplay muted loop playsinline preload="none" poster="assets/img/video-poster.jpg" aria-label="Visite vidéo du cabinet SKINTECK"><source src="assets/video/cabinet.mp4" type="video/mp4"></video>
       <div>
-        <h2 class="title">Venez nous voir.</h2>
+        <p class="kicker">Prendre rendez-vous</p>
+        <h2 class="title">Commençons par en parler.</h2>
+        <p class="lead lead--left">Pas besoin de savoir quel soin choisir. Réservez un diagnostic, on s’occupe du reste.</p>
+        <div class="actions actions--left"><a class="btn" href="#" data-off>Réserver mon diagnostic</a></div>
         <dl class="spec">
           <div><dt>Adresse</dt><dd><a href="#" data-off>227 rue Paradis, 13006 Marseille</a></dd></div>
           <div><dt>Horaires</dt><dd>Lundi au vendredi : 10h00 – 19h30<br>Samedi : 10h00 – 17h00<br>Sur rendez-vous</dd></div>
@@ -197,36 +265,13 @@
       </div>
     </div>
   </section>
-
-  <section class="sec" id="fondateur">
-    <div class="wrap founder">
-      <div class="founder__img gentle"><img loading="lazy" src="assets/img/vincent.webp" alt="Vincent Ingrassia, fondateur de SKINTECK, dans l’escalier du cabinet"></div>
-      <div>
-        <p class="kicker">Le fondateur</p>
-        <h2 class="title">Un regard expert au service de votre peau.</h2>
-        <p>Vincent Ingrassia est le fondateur de SKINTECK et spécialiste des technologies dermo-esthétiques. Son approche repose sur l’analyse, la personnalisation des protocoles et le suivi dans le temps. Chaque technologie est choisie pour répondre à un besoin identifié.</p>
-        <p class="sign">Vincent Ingrassia</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec grey center">
-    <div class="wrap">
-      <h2 class="title gentle">Commencez par la bonne décision.</h2>
-      <p class="lead">No miracles, just science.</p>
-      <div class="actions">
-        <a class="btn" href="#" data-off>Réserver mon diagnostic</a>
-        <a class="more-link" href="#commencer">Par quoi commencer</a>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="foot">
   <div class="wrap">
     <p>Tarifs indicatifs. SKINTECK ANALYSIS™ aide à mieux comprendre votre situation et à suivre son évolution. Il ne remplace pas un diagnostic médical.</p>
     <div class="foot__nav">
-      <a href="diagnostic.html">Diagnostic</a><a href="#soins">Soins</a><a href="#cabinet">Le cabinet</a><a href="#" data-off>Journal</a><a href="#contact">Contact</a>
+      <a href="#besoin">Votre besoin</a><a href="diagnostic.html">Diagnostic</a><a href="#soins">Soins</a><a href="cabinet.html">Le cabinet</a><a href="#" data-off>Journal</a><a href="#contact">Contact</a>
     </div>
     <div class="foot__end">
       <p>INGV SKINTECK, SASU au capital de 2 000 €. RCS Gap 942 214 792. Président : Vincent Ingrassia.</p>

@@ -19,30 +19,38 @@
 
   /* Finder */
   const P = {
-    diag: { img: 'consult', alt: 'Diagnostic de peau sur Smart Skin Pro', tag: 'Le bon point de départ', name: 'SKINTECK ANALYSIS™',
-      text: 'Vous n’avez pas besoin de connaître le nom d’un protocole avant de réserver. Venez avec votre préoccupation et votre objectif.',
-      proto: 'Échange, observation professionnelle et technologies d’analyse', price: '30 €, déduits si vous réalisez ensuite un soin', href: 'diagnostic.html', cta: 'Découvrir le diagnostic' },
-    lift: { img: 'lift', alt: 'Séance de HIFU sur le visage', tag: 'Visage · Fermeté', name: 'SKINTECK LIFT™',
-      text: 'Raffermissement et effet lifting par stimulation du collagène en profondeur, pour accompagner la perte de fermeté du visage.',
-      proto: 'HIFU par ultrasons focalisés + LED', price: '1 zone 220 € · 2 zones 400 € · 3 zones 560 €', href: '#' },
-    pure: { img: 'pure', alt: 'Hydrodermabrasion du visage', tag: 'Visage · Pureté', name: 'SKINTECK PURE™',
-      text: 'Nettoyage profond, désobstruction des pores et réhydratation pour retrouver une peau plus nette, plus équilibrée et plus lumineuse.',
-      proto: 'Hydrodermabrasion AquaPeel + actifs adaptés + LED', price: '95 € · 270 € · 510 € (1, 3 ou 6 séances)', href: '#' },
-    regen: { img: 'regen', alt: 'Microneedling du visage', tag: 'Visage · Régénération', name: 'SKINTECK REGEN™',
-      text: 'Amélioration progressive de la qualité de peau, de la texture et des imperfections, avec stimulation des mécanismes de régénération cutanée.',
-      proto: 'Microneedling + actifs adaptés + LED', price: '150 € · 420 € · 780 € (1, 3 ou 6 séances)', href: '#' },
-    peel: { img: 'peel', alt: 'Préparation d’un peeling professionnel', tag: 'Visage · Éclat', name: 'SKINTECK PEEL™',
-      text: 'Protocole d’éclat et de correction destiné à accompagner le teint irrégulier, les taches et les problématiques de grain de peau.',
-      proto: 'Peeling professionnel + actifs adaptés + LED', price: '120 € · 330 € · 600 €, selon le protocole et le nombre de séances', href: '#' },
-    sculpt: { img: 'sculpt', alt: 'Séance d’électrostimulation', tag: 'Corps · Silhouette', name: 'SKINTECK SCULPT™',
-      text: 'Programme silhouette associant plusieurs technologies afin d’accompagner les amas graisseux localisés, la tonicité et le drainage.',
-      proto: 'Cryolipolyse + Lipo HIFU + électrostimulation + pressothérapie', price: '890 € le programme de 6 semaines', href: '#' },
-    density: { img: 'density', alt: 'Soin du cuir chevelu réalisé par Vincent', tag: 'Cheveux & barbe · Densité', name: 'SKINTECK DENSITY™',
-      text: 'Programme capillaire destiné à améliorer progressivement la qualité, la résistance et l’apparence de densité des cheveux ou de la barbe.',
-      proto: 'Hydrodermabrasion du cuir chevelu + microneedling + LED', price: 'Cure initiale 590 € · Cure complète 990 € à 1 190 €', href: '#' },
-    laser: { img: 'laser', alt: 'Salle de soin avec le laser diode', tag: 'Femmes & hommes', name: 'Épilation laser diode',
-      text: 'Une réduction progressive de la pilosité. Chaque protocole est adapté à la zone, au phototype, aux caractéristiques du poil et à son cycle de croissance.',
-      proto: 'Laser diode, paramètres ajustés au fil des séances', price: 'Selon les zones traitées', href: '#', cta: 'Voir les zones et les tarifs' },
+    diag: { img: 'consult', alt: 'Échange devant le poste d’analyse de peau', tag: 'C’est normal', name: 'Commencez par comprendre.',
+      text: 'Venez avec ce qui vous gêne. On regarde, on vous explique ce qu’on voit, puis on décide ensemble de ce qui est utile.',
+      adv: 'Un vrai temps d’analyse, sans obligation de faire un soin.',
+      proto: 'Échange + SKINTECK ANALYSIS™, notre diagnostic peau ou silhouette', price: '30 €, déduits si vous réalisez ensuite un soin', href: 'diagnostic.html', cta: 'Découvrir le diagnostic' },
+    lift: { img: 'lift', alt: 'Séance de HIFU sur le visage', tag: 'Visage · Fermeté', name: 'Retrouver un visage plus ferme.',
+      text: 'Les traits tombent un peu, l’ovale est moins net, vous avez l’air fatigué. On commence par regarder où, et pourquoi.',
+      adv: 'On analyse votre peau pour cibler les bonnes zones, ou pour vous dire si ce soin n’est pas le bon.',
+      proto: 'SKINTECK LIFT™ · HIFU (ultrasons focalisés) + LED', price: '1 zone 220 € · 2 zones 400 € · 3 zones 560 €', href: '#', cta: 'Découvrir LIFT™' },
+    pure: { img: 'pure', alt: 'Hydrodermabrasion du visage', tag: 'Visage · Éclat', name: 'Retrouver une peau nette et lumineuse.',
+      text: 'Pores visibles, teint gris, peau encombrée : votre peau manque de fraîcheur.',
+      adv: 'Le nettoyage et les produits sont choisis selon ce que l’analyse montre de votre peau.',
+      proto: 'SKINTECK PURE™ · Hydrodermabrasion AquaPeel + actifs + LED', price: '95 € · 270 € · 510 € (1, 3 ou 6 séances)', href: '#', cta: 'Découvrir PURE™' },
+    regen: { img: 'regen', alt: 'Microneedling du visage', tag: 'Visage · Texture', name: 'Une peau plus lisse et plus uniforme.',
+      text: 'Grain de peau irrégulier, marques, petites rides : votre peau vous semble moins belle qu’avant.',
+      adv: 'Le nombre de séances dépend de votre peau, et on mesure l’évolution en cours de route.',
+      proto: 'SKINTECK REGEN™ · Microneedling + actifs + LED', price: '150 € · 420 € · 780 € (1, 3 ou 6 séances)', href: '#', cta: 'Découvrir REGEN™' },
+    peel: { img: 'peel', alt: 'Préparation d’un peeling professionnel', tag: 'Visage · Teint', name: 'Un teint plus uniforme.',
+      text: 'Des taches, un teint irrégulier : votre peau ne reflète pas comment vous vous sentez.',
+      adv: 'On regarde d’abord le type de taches pour choisir le bon peeling, à la bonne intensité.',
+      proto: 'SKINTECK PEEL™ · Peeling professionnel + actifs + LED', price: '120 € · 330 € · 600 €, selon le protocole et le nombre de séances', href: '#', cta: 'Découvrir PEEL™' },
+    sculpt: { img: 'sculpt', alt: 'Séance d’électrostimulation', tag: 'Corps · Silhouette', name: 'Une silhouette plus tonique.',
+      text: 'Vous faites des efforts, mais certaines zones ne changent pas.',
+      adv: 'Une analyse du corps au départ, puis des mesures pour voir vos vrais progrès.',
+      proto: 'SKINTECK SCULPT™ · Cryolipolyse + Lipo HIFU + électrostimulation + pressothérapie', price: '890 € le programme de 6 semaines', href: '#', cta: 'Découvrir SCULPT™' },
+    density: { img: 'density', alt: 'Soin du cuir chevelu réalisé par Vincent', tag: 'Cheveux & barbe', name: 'Des cheveux plus denses.',
+      text: 'Cheveux plus fins, moins de volume, barbe clairsemée : ça se voit, et ça pèse.',
+      adv: 'On observe d’abord le cuir chevelu pour adapter le programme à votre cas.',
+      proto: 'SKINTECK DENSITY™ · Soin du cuir chevelu + microneedling + LED', price: 'Cure initiale 590 € · Cure complète 990 € à 1 190 €', href: '#', cta: 'Découvrir DENSITY™' },
+    laser: { img: 'laser', alt: 'Salle de soin avec le laser diode', tag: 'Femmes & hommes', name: 'Moins de poils, progressivement.',
+      text: 'Le rasage et l’épilation qui reviennent sans cesse, vous en avez assez.',
+      adv: 'Les réglages sont adaptés à votre peau, à la zone et au cycle du poil.',
+      proto: 'Épilation au laser diode', price: 'Selon les zones traitées', href: '#', cta: 'Voir les zones et les tarifs' },
   };
   const panel = $('.panel');
   if (panel) {
@@ -67,7 +75,7 @@
       const swap = () => { img.src = next.src; img.alt = d.alt; img.style.opacity = 1; };
       next.onload = swap; next.onerror = swap;
       next.src = `assets/img/${d.img}.webp`;
-      ['tag', 'name', 'text', 'proto', 'price'].forEach((k) => { f(k).textContent = d[{ tag: 'tag', name: 'name', text: 'text', proto: 'proto', price: 'price' }[k]]; });
+      ['tag', 'name', 'text', 'adv', 'proto', 'price'].forEach((k) => { f(k).textContent = d[k]; });
       const cta = f('cta');
       cta.href = d.href;
       cta.textContent = d.cta || `Découvrir ${d.name}`;
