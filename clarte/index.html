@@ -17,9 +17,9 @@
   <div class="nav__in">
     <a class="logo" href="index.html" aria-label="SKINTECK, accueil"><img src="assets/img/logo.png" alt=""></a>
     <nav class="links" aria-label="Navigation principale">
+      <a href="#reserver">Soins &amp; tarifs</a>
       <a href="#besoin">Votre besoin</a>
       <a href="diagnostic.html">Diagnostic</a>
-      <a href="#soins">Soins</a>
       <a href="cabinet.html">Le cabinet</a>
       <a href="#" data-off>Journal</a>
       <a href="#contact">Contact</a>
@@ -32,9 +32,9 @@
 </header>
 
 <div class="menu" id="menu">
+  <a href="#reserver">Soins &amp; tarifs</a>
   <a href="#besoin">Votre besoin</a>
   <a href="diagnostic.html">Diagnostic</a>
-  <a href="#soins">Soins</a>
   <a href="cabinet.html">Le cabinet</a>
   <a href="#" data-off>Journal</a>
   <a href="#contact">Contact</a>
@@ -49,8 +49,8 @@
       <h1>Comprendre avant de traiter.</h1>
       <p class="lede lead">Visage, silhouette, cheveux. Avant de vous proposer un soin, on prend le temps de comprendre ce qui vous gêne.</p>
       <div class="actions">
-        <a class="btn" href="#" data-off>Prendre rendez-vous</a>
-        <a class="more-link" href="#bienvenue">Découvrir SKINTECK</a>
+        <a class="btn" href="#reserver">Réserver un soin</a>
+        <a class="more-link" href="#besoin">Je ne sais pas quoi choisir</a>
       </div>
     </div>
     <div class="hero__img"><img src="assets/img/lounge.webp" alt="Le salon d’accueil du cabinet SKINTECK, poutres apparentes et lumière douce" fetchpriority="high" style="object-position:50% 58%"></div>
@@ -61,6 +61,69 @@
         <li><strong>Sans engagement</strong>Le diagnostic n’oblige à aucun soin</li>
         <li><strong>Sur rendez-vous</strong>Lun–ven 10h–19h30, sam 10h–17h</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- 1b. Réserver directement : les soins les plus demandés, en tête -->
+  <section class="sec grey quick" id="reserver">
+    <div class="wrap">
+      <div class="quick__head">
+        <div>
+          <p class="kicker">Réserver un soin</p>
+          <h2 class="title">Vous savez ce que vous voulez ?</h2>
+        </div>
+        <a class="more-link" href="#soins">Tous les soins et tarifs</a>
+      </div>
+      <div class="qgrid">
+        <article class="q">
+          <div class="q__img"><img loading="lazy" src="assets/img/laser.webp" alt="Le laser diode du cabinet"><span class="q__flag">Saison idéale pour commencer</span></div>
+          <div class="q__txt">
+            <p class="tagline">Femmes &amp; hommes</p>
+            <h3>Épilation laser</h3>
+            <p>Moins de poils, séance après séance. Réglé pour votre peau.</p>
+            <p class="q__price">Prix selon la zone</p>
+            <div class="q__act"><a class="btn" href="#" data-off>Réserver</a><a class="more-link" href="#" data-off>Zones et tarifs</a></div>
+          </div>
+        </article>
+        <article class="q">
+          <div class="q__img"><img loading="lazy" src="assets/img/pure.webp" alt="Soin d’hydrodermabrasion du visage"></div>
+          <div class="q__txt">
+            <p class="tagline">Visage · Éclat</p>
+            <h3>Hydrodermabrasion</h3>
+            <p>Peau nette, pores désobstrués, éclat immédiat. Le soin pour commencer.</p>
+            <p class="q__price">À partir de 95 €</p>
+            <div class="q__act"><a class="btn" href="#" data-off>Réserver</a><a class="more-link" href="#" data-off>Le soin PURE™</a></div>
+          </div>
+        </article>
+        <article class="q">
+          <div class="q__img"><img loading="lazy" src="assets/img/lift.webp" alt="Séance de HIFU sur le visage"></div>
+          <div class="q__txt">
+            <p class="tagline">Visage · Fermeté</p>
+            <h3>HIFU visage</h3>
+            <p>Un visage plus ferme, sans aiguille. Les traits se redessinent progressivement.</p>
+            <p class="q__price">À partir de 220 €</p>
+            <div class="q__act"><a class="btn" href="#" data-off>Réserver</a><a class="more-link" href="#" data-off>Le soin LIFT™</a></div>
+          </div>
+        </article>
+        <article class="q">
+          <div class="q__img"><img loading="lazy" src="assets/img/regen.webp" alt="Microneedling du visage"><span class="q__flag">Saison idéale pour commencer</span></div>
+          <div class="q__txt">
+            <p class="tagline">Visage · Texture</p>
+            <h3>Microneedling</h3>
+            <p>Une peau plus lisse : grain, marques et petites rides atténués.</p>
+            <p class="q__price">À partir de 150 €</p>
+            <div class="q__act"><a class="btn" href="#" data-off>Réserver</a><a class="more-link" href="#" data-off>Le soin REGEN™</a></div>
+          </div>
+        </article>
+      </div>
+      <div class="also">
+        <span>Aussi :</span>
+        <a href="#" data-off>Peeling dès 120 €</a>
+        <a href="#" data-off>Silhouette 890 €</a>
+        <a href="#" data-off>Cheveux dès 590 €</a>
+        <a href="#" data-off>Soins combinés</a>
+      </div>
+      <a class="unsure" href="diagnostic.html"><span><b>Vous hésitez ?</b> Commencez par un diagnostic : 30 €, déduits du soin.</span><span class="unsure__go">Réserver le diagnostic ›</span></a>
     </div>
   </section>
 
@@ -281,8 +344,8 @@
 </footer>
 
 <div class="buy">
-  <span><b>Diagnostic SKINTECK</b><small>30 €, déduits si un soin est réalisé</small></span>
-  <a class="btn" href="#" data-off>Réserver</a>
+  <span><b>Laser, HIFU, visage</b><small>Réservez en ligne en 1 minute</small></span>
+  <a class="btn" href="#reserver">Réserver un soin</a>
 </div>
 <script src="assets/main.js"></script>
 </body>
