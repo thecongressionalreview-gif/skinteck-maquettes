@@ -139,3 +139,5 @@
   .trio .tile__img{flex:none;width:112px;aspect-ratio:auto}
   .trio{gap:12px}
 }
+.book{position:relative}
+.book__all{display:block;margin:14px auto 4px;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);font-size:14px;cursor:pointer}

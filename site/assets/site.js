@@ -72,10 +72,75 @@
     else if (h.includes('prendre-rendez-vous')) event('click_booking', { soin: a.dataset.soin || '' });
   });
 
-  /* 4. Planity white-label module, loaded only where a .book container exists */
+  /* 4. Planity white-label module, loaded only where a .book container exists.
+     Planity has no deep link, so once it renders we either pick one service (select)
+     or hide every row that isn't part of this treatment (filter). Unknown text = full list. */
+  const PRESET = {
+    regen: { select: 'Microneedling + LED' },
+    pure: { select: 'Hydrodermabrasion + LED' },
+    peel: { select: 'Peeling professionnel + LED' },
+    skinprogram: { select: 'Routine skincare personnalisée' },
+    diagnostic: { filter: ['Analyse de peau par imagerie', 'Analyse silhouette par imagerie', 'Analyse du cuir chevelu'] },
+    density: { select: 'Analyse du cuir chevelu' },
+    lift: { filter: ['HIFU double menton', 'HIFU cou', 'HIFU décolleté', 'HIFU ovale', 'HIFU global'] },
+    laser: { filter: ['Épilation laser'] },
+    cryo: { filter: ['Cryolipolyse'] },
+    sculpt: { filter: ['Cryolipolyse', 'HIFU corps', 'Électrostimulation', 'Pressothérapie', 'Analyse silhouette'] },
+    duos: { filter: ['Soin visage complet', 'Soin corps'] },
+    drainage: { filter: ['Renata França', 'Miracle', 'i.PROST', 'Madéro', 'Emy.A', 'Rituel', 'FASCIALCHIMIE', 'Vodder'] },
+  };
   const book = document.querySelector('[data-planity]');
+  const want = book && (new URLSearchParams(location.search).get('soin') || book.dataset.soin);
+  const preset = want && PRESET[want];
+  const rowsOf = (root) => [...root.querySelectorAll('button')].filter((b) => b.innerText.trim() === 'Choisir').map((b) => {
+    let r = b;
+    while (r.parentElement && r.parentElement !== root && [...r.parentElement.querySelectorAll('button')].filter((x) => x.innerText.trim() === 'Choisir').length < 2) r = r.parentElement;
+    return { row: r, btn: b, name: (r.innerText.split('\n').find((l) => l.trim()) || '').trim() };
+  });
+  const applyPreset = (root) => {
+    const rows = rowsOf(root);
+    if (!rows.length) return false;
+    if (preset.select) {
+      const hit = rows.find((r) => r.name.startsWith(preset.select));
+      if (hit) { hit.btn.click(); event('booking_preselect', { soin: want }); }
+      return true;
+    }
+    const keep = (n) => preset.filter.some((f) => n.includes(f));
+    if (!rows.some((r) => keep(r.name))) return true; // nothing matches: leave the full list
+    // expand "Voir les N autres prestations" so every option is present, then hide the rest
+    const more = /^Voir les \d+ autres prestations$/;
+    // click only the innermost matching element of each link (outer + inner both match the text)
+    [...root.querySelectorAll('a,button,span,div,p')].filter((e) => more.test(e.innerText.trim()) && ![...e.children].some((c) => more.test(c.innerText.trim()))).forEach((e) => e.click());
+    const hide = () => {
+      for (const r of rowsOf(root)) r.row.style.display = keep(r.name) ? '' : 'none';
+      // hide category blocks left with no visible service
+      root.querySelectorAll('h2,h3,h4').forEach((h) => {
+        let sec = h.parentElement;
+        while (sec && sec !== root && !sec.querySelector('button')) sec = sec.parentElement;
+        if (!sec || sec === root) return;
+        const vis = rowsOf(sec).some((r) => r.row.style.display !== 'none');
+        sec.style.display = vis ? '' : 'none';
+      });
+    };
+    hide(); setTimeout(hide, 400); setTimeout(hide, 1200);
+    if (!book.querySelector('.book__all')) {
+      const a = document.createElement('button'); a.type = 'button'; a.className = 'book__all'; a.textContent = 'Voir tous les soins';
+      a.addEventListener('click', () => { a.remove(); for (const r of rowsOf(root)) r.row.style.display = ''; root.querySelectorAll('*').forEach((e) => { if (e.style.display === 'none') e.style.display = ''; }); });
+      book.appendChild(a);
+    }
+    event('booking_filter', { soin: want });
+    return true;
+  };
   if (book) {
     const key = book.dataset.planity;
+    if (preset) {
+      const mo = new MutationObserver(() => {
+        const root = document.getElementById('planitywl');
+        if (root && applyPreset(root)) mo.disconnect();
+      });
+      mo.observe(book, { childList: true, subtree: true });
+      setTimeout(() => mo.disconnect(), 20000);
+    }
     const go = () => {
       if (window.planity) return;
       const c = document.createElement('div'); c.id = 'myContainerId';
