@@ -141,3 +141,21 @@
 }
 .book{position:relative}
 .book__all{display:block;margin:14px auto 4px;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);font-size:14px;cursor:pointer}
+
+/* booking: reassurance + no-account fallback */
+.book-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:clamp(20px,3vw,32px) auto 0;font-size:14px;color:var(--muted)}
+.book-trust li{display:flex;align-items:center;gap:7px}
+.book-trust li::before{content:"";width:16px;height:16px;flex:none;border-radius:50%;background:#e8f2fd url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.3l2.2 2.2 4.8-5' fill='none' stroke='%230071e3' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.book-trust b{font-weight:600;color:var(--text)}
+.book .book-trust{display:none}
+.book + .book-trust{display:none}
+.book{margin-top:16px}
+.book-fb{max-width:980px;margin:16px auto 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 24px;border-radius:20px;background:var(--white);box-shadow:0 0 0 1px rgba(0,0,0,.06);font-size:15px;line-height:1.4;transition:box-shadow .3s,background .3s}
+.book-fb p{flex:1 1 320px;color:#424245}
+.book-fb b{color:var(--text)}
+.book-fb__b{display:flex;flex-wrap:wrap;gap:8px}
+.book-fb .btn{min-height:40px;padding:8px 18px;font-size:15px}
+.btn--wa{background:#1d1d1f}.btn--wa:hover{background:#000}
+/* at Planity's sign-in step, make the fallback stand out */
+.book-fb.is-hot{background:#fff8e6;box-shadow:0 0 0 2px #f5c451}
+@media (max-width:600px){.book-fb{padding:16px}.book-fb__b{width:100%}.book-fb .btn{flex:1}}

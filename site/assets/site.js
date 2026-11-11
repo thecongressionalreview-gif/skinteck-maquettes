@@ -162,7 +162,60 @@
     event('booking_filter', { soin: want });
     return true;
   };
+  /* 4b. Booking funnel: Planity draws each step in our page, so we read its headings.
+     1 service chosen -> 2 slot chosen -> 3 sign-in step -> 4 confirmed.
+     Each step fires once per page view with treatment, price and source.
+     Add ?sk_debug=1 to the URL to see the events on screen (for the test booking). */
+  const DEBUG = qs.has('sk_debug');
+  const toast = (m) => {
+    if (!DEBUG) return;
+    console.log('[SKINTECK]', m);
+    const t = document.createElement('div');
+    t.textContent = m; t.style.cssText = 'position:fixed;z-index:99;left:12px;top:' + (60 + document.querySelectorAll('.sk-toast').length * 34) + 'px;background:#1d1d1f;color:#fff;padding:6px 12px;border-radius:8px;font:13px/1.3 system-ui';
+    t.className = 'sk-toast'; document.body.appendChild(t); setTimeout(() => t.remove(), 8000);
+  };
+  const STEPS = [
+    ['booking_service', /Prestation sélectionnée/i],
+    ['booking_slot', /Date et heure sélectionnées/i],
+    ['booking_identify', /Nouveau sur ce service|Se connecter|Identification/i],
+    // confirmation wording to be checked with Vincent's test booking (?sk_debug=1 shows the text)
+    ['booking_confirmed', /rendez-vous (est |a été |a bien été )?confirm|réservation (est |a été |a bien été )?confirm|votre rendez-vous est (bien )?(enregistré|réservé)|merci pour votre réservation/i],
+  ];
+  const done = new Set();
+  const detail = (root) => {
+    const t = root.innerText;
+    const m = /Prestation sélectionnée\s*\n+\s*([^\n]+)\n+\s*([^\n]+)/.exec(t);
+    const price = m && /(\d[\d\s]*)\s*€/.exec(m[2]);
+    const when = /Date et heure sélectionnées\s*\n+\s*([^\n]+)/.exec(t);
+    return { soin: m ? m[1].trim() : '', value: price ? Number(price[1].replace(/\s/g, '')) : 0, currency: 'EUR', creneau: when ? when[1].trim() : '' };
+  };
+  const watchFunnel = () => {
+    const fb = document.querySelector('.book-fb');
+    const check = () => {
+      const root = document.getElementById('planitywl'); if (!root) return;
+      const t = root.innerText;
+      if (fb) fb.classList.toggle('is-hot', STEPS[2][1].test(t) && !STEPS[3][1].test(t));
+      for (const [name, re] of STEPS) {
+        if (done.has(name) || !re.test(t)) continue;
+        // the confirmed step must come after a real selection, never on its own
+        if (name === 'booking_confirmed' && !done.has('booking_slot')) continue;
+        done.add(name);
+        const d = detail(root);
+        event(name, d);
+        if (name === 'booking_confirmed') {
+          if (live && T.googleAds && T.adsBookingLabel) gtag('event', 'conversion', { send_to: T.googleAds + '/' + T.adsBookingLabel, value: d.value, currency: 'EUR' });
+          if (window.fbq) fbq('track', 'Schedule', { value: d.value, currency: 'EUR', content_name: d.soin });
+          store.set('sk_last_booking', JSON.stringify({ at: Date.now(), soin: d.soin, src: source() }));
+        }
+        toast(name + (d.soin ? ' · ' + d.soin : '') + (d.value ? ' · ' + d.value + ' €' : '') + ' · source: ' + JSON.stringify(source() || 'direct'));
+        if (DEBUG && name === 'booking_identify') console.log('[SKINTECK] widget text now:\n' + t.slice(0, 1500));
+      }
+      if (DEBUG && done.has('booking_identify') && !done.has('booking_confirmed')) window.__skLastText = t;
+    };
+    new MutationObserver(check).observe(book, { childList: true, subtree: true, characterData: true });
+  };
   if (book) {
+    watchFunnel();
     const key = book.dataset.planity;
     if (preset) {
       const mo = new MutationObserver(() => {
