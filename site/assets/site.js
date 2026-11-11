@@ -92,35 +92,66 @@
   const book = document.querySelector('[data-planity]');
   const want = book && (new URLSearchParams(location.search).get('soin') || book.dataset.soin);
   const preset = want && PRESET[want];
-  const rowsOf = (root) => [...root.querySelectorAll('button')].filter((b) => b.innerText.trim() === 'Choisir').map((b) => {
+  /* Planity draws two layouts: desktop (categories open, text "Choisir" buttons) and mobile
+     (categories folded, services hidden until the category title is tapped). We read the DOM
+     with textContent so hidden services are found too, open their category, then act. */
+  const txt = (e) => (e.textContent || '').replace(/\s+/g, ' ').trim();
+  const isPick = (b) => {
+    const t = txt(b), c = String(b.className);
+    if (t === 'Choisir') return true;
+    return t === '' && /button/i.test(c) && !/toggle/i.test(c) && !!b.closest('[class*="service"]');
+  };
+  const rowsOf = (root) => [...root.querySelectorAll('button')].filter(isPick).map((b) => {
     let r = b;
-    while (r.parentElement && r.parentElement !== root && [...r.parentElement.querySelectorAll('button')].filter((x) => x.innerText.trim() === 'Choisir').length < 2) r = r.parentElement;
-    return { row: r, btn: b, name: (r.innerText.split('\n').find((l) => l.trim()) || '').trim() };
+    while (r.parentElement && r.parentElement !== root && [...r.parentElement.querySelectorAll('button')].filter(isPick).length < 2) r = r.parentElement;
+    return { row: r, btn: b, name: txt(r) };
   });
+  // category ("service set") of a service: the smallest block that holds both its title and the service
+  const categoryOf = (row, root) => {
+    for (let a = row.parentElement; a && a !== root; a = a.parentElement) {
+      const t = a.querySelector('[class*="service_set-module_title"]');
+      if (t && !row.contains(t)) return { head: t, wrap: a };
+    }
+    return null;
+  };
+  const visible = (e) => !!(e.offsetParent || e.getClientRects().length);
+  const collapsed = (cat) => !!cat && (/isCollapsed/.test(String(cat.wrap.className)) || !!cat.wrap.querySelector('[class*="service_set-module_isCollapsed"]'));
+  const openCat = (cat) => { if (!cat || !collapsed(cat)) return; const c = cat.head.querySelector('button,[role=button]') || cat.head; c.click(); };
+  const later = (fn, ms) => new Promise((r) => setTimeout(() => r(fn()), ms));
   const applyPreset = (root) => {
     const rows = rowsOf(root);
     if (!rows.length) return false;
     if (preset.select) {
       const hit = rows.find((r) => r.name.startsWith(preset.select));
-      if (hit) { hit.btn.click(); event('booking_preselect', { soin: want }); }
+      if (!hit) return true;
+      (async () => {
+        { const c = categoryOf(hit.row, root); if (collapsed(c)) { openCat(c); await later(() => 0, 700); } }
+        if (false) { await later(() => 0, 700); }
+        const fresh = rowsOf(root).find((r) => r.name.startsWith(preset.select)) || hit;
+        fresh.btn.click();
+        event('booking_preselect', { soin: want });
+      })();
       return true;
     }
     const keep = (n) => preset.filter.some((f) => n.includes(f));
     if (!rows.some((r) => keep(r.name))) return true; // nothing matches: leave the full list
-    // expand "Voir les N autres prestations" so every option is present, then hide the rest
+    // desktop: expand "Voir les N autres prestations" (innermost element only, outer + inner both match)
     const more = /^Voir les \d+ autres prestations$/;
-    // click only the innermost matching element of each link (outer + inner both match the text)
-    [...root.querySelectorAll('a,button,span,div,p')].filter((e) => more.test(e.innerText.trim()) && ![...e.children].some((c) => more.test(c.innerText.trim()))).forEach((e) => e.click());
+    [...root.querySelectorAll('a,button,span,div,p')].filter((e) => more.test(txt(e)) && ![...e.children].some((c) => more.test(txt(c)))).forEach((e) => e.click());
+    // mobile: open each folded category that holds a kept service
+    const cats = new Map();
+    for (const r of rows) { const c = categoryOf(r.row, root); if (c && !cats.has(c.wrap)) cats.set(c.wrap, c); }
+    for (const c of cats.values()) {
+      const kept = rowsOf(c.wrap).some((r) => keep(r.name));
+      if (kept) openCat(c);
+    }
     const hide = () => {
-      for (const r of rowsOf(root)) r.row.style.display = keep(r.name) ? '' : 'none';
-      // hide category blocks left with no visible service
-      root.querySelectorAll('h2,h3,h4').forEach((h) => {
-        let sec = h.parentElement;
-        while (sec && sec !== root && !sec.querySelector('button')) sec = sec.parentElement;
-        if (!sec || sec === root) return;
-        const vis = rowsOf(sec).some((r) => r.row.style.display !== 'none');
-        sec.style.display = vis ? '' : 'none';
-      });
+      const all = rowsOf(root);
+      for (const r of all) r.row.style.display = keep(r.name) ? '' : 'none';
+      for (const r of all) {
+        const c = categoryOf(r.row, root); if (!c) continue;
+        c.wrap.style.display = rowsOf(c.wrap).some((x) => keep(x.name)) ? '' : 'none';
+      }
     };
     hide(); setTimeout(hide, 400); setTimeout(hide, 1200);
     if (!book.querySelector('.book__all')) {
