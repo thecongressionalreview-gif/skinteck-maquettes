@@ -20,7 +20,7 @@
   /* Finder */
   const P = {
     diag: { img: 'consult', alt: 'Échange devant le poste d’analyse de peau', tag: 'C’est normal', name: 'Commencez par comprendre.',
-      text: 'Venez avec ce qui vous gêne. On regarde, on vous explique ce qu’on voit, puis on décide ensemble de ce qui est utile.',
+      text: 'Venez avec vos questions et vos objectifs. Nous observons, nous vous expliquons ce que nous voyons, puis nous décidons ensemble de ce qui est utile.',
       adv: 'Un vrai temps d’analyse, sans obligation de faire un soin.',
       proto: 'Échange + SKINTECK ANALYSIS™, notre diagnostic peau ou silhouette', price: '30 €, déduits si vous réalisez ensuite un soin', href: '/skinteck-maquettes/site/diagnostic', cta: 'Découvrir le diagnostic' },
     lift: { img: 'lift', alt: 'Séance de HIFU sur le visage', tag: 'Visage · Fermeté', name: 'Retrouver un visage plus ferme.',
