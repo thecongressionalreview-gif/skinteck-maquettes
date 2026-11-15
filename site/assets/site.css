@@ -186,3 +186,9 @@
 .rq__check{width:64px;height:64px;border-radius:50%;background:#e8f7ee;color:#1a8f4c;font-size:32px;display:grid;place-items:center;margin:0 auto 14px}
 .rq__sum,.rq__alt{color:var(--muted);font-size:15px}.rq__alt a{color:var(--link)}
 @media (max-width:600px){.rq__two{grid-template-columns:1fr}.rqc{font-size:14px;padding:8px 11px}}
+.rq__f{gap:10px;margin-top:6px}
+.rq__soin{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:14px;background:#f5f5f7;font-size:17px}
+.rq__soin span{color:var(--muted);font-size:14px}.rq__soin b{flex:1;font-weight:600}
+.rq__chg{font:inherit;font-size:15px;color:var(--link);background:none;border:0;cursor:pointer;padding:0}
+.rq__moments{align-items:center;margin-top:4px}.rq__moments>span{font-size:15px;color:var(--muted);margin-right:2px}.rq__moments>span small{font-size:13px}
+.rq__go{margin-top:8px}

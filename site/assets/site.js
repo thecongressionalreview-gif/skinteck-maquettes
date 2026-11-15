@@ -232,21 +232,19 @@
     const tpl = document.querySelector('.rq-tpl'); if (!tpl) return false;
     book.classList.add('book--rq'); book.innerHTML = ''; book.appendChild(tpl.content.cloneNode(true));
     const rq = book.querySelector('.rq'), f = rq.querySelector('form'), sel = f.soin, err = rq.querySelector('.rq__err');
-    if (want && sel.querySelector('option[value="' + want + '"]')) sel.value = want;
-    const J = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'], M = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
-    const days = rq.querySelector('.rq__days');
-    for (let d = new Date(), n = 0; n < 8;) {
-      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-      if (d.getDay() === 0) continue; n++;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'rqc'; b.setAttribute('aria-pressed', 'false');
-      b.dataset.day = J[d.getDay()] + ' ' + d.getDate() + ' ' + M[d.getMonth()];
-      b.innerHTML = J[d.getDay()] + '<small>' + d.getDate() + ' ' + M[d.getMonth()] + '</small>';
-      days.appendChild(b);
+    // treatment known from the page: show it as one line with "Changer"; otherwise show the list
+    const row = rq.querySelector('.rq__soin'), nom = rq.querySelector('.rq__soin-nom');
+    const label = () => sel.options[sel.selectedIndex].text;
+    if (want && sel.querySelector('option[value="' + want + '"]')) {
+      sel.value = want; nom.textContent = label(); row.hidden = false; sel.hidden = true;
+      rq.querySelector('.rq__chg').addEventListener('click', () => { row.hidden = true; sel.hidden = false; sel.focus(); });
     }
-    const flip = (b) => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
-    rq.querySelectorAll('.rq__chips').forEach((g) => g.addEventListener('click', (e) => { const b = e.target.closest('.rqc'); if (b) flip(b); }));
-    rq.querySelector('.rq__via').addEventListener('click', (e) => { const b = e.target.closest('.rqc'); if (!b) return; rq.querySelectorAll('.rq__via .rqc').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
-    const picked = (q) => [...rq.querySelectorAll(q + ' [aria-pressed=true]')];
+    // optional time of day: one choice, tap again to clear
+    rq.querySelector('.rq__moments').addEventListener('click', (e) => {
+      const b = e.target.closest('.rqc'); if (!b) return;
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      rq.querySelectorAll('.rq__moments .rqc').forEach((x) => x.setAttribute('aria-pressed', String(on && x === b)));
+    });
     let started = false;
     f.addEventListener('input', () => { err.hidden = true; if (!started) { started = true; event('booking_request_start', { soin: sel.value }); } });
     f.addEventListener('submit', async (e) => {
@@ -255,32 +253,30 @@
       const bad = !prenom ? 'Indiquez votre prénom.' : (tel.replace(/\D/g, '').length < 9 ? 'Indiquez un numéro de téléphone valide.' : '');
       err.hidden = !bad; err.textContent = bad; if (bad) return;
       const go = f.querySelector('.rq__go'); go.disabled = true; go.textContent = 'Envoi…';
-      const via = (picked('.rq__via')[0] || {}).dataset?.via || 'Appel';
+      const moment = (rq.querySelector('.rq__moments [aria-pressed=true]') || {}).textContent || '';
       const d = {
-        test: AB.nom, variant, soin: sel.value, soinNom: sel.options[sel.selectedIndex].text,
-        jours: picked('.rq__days').map((b) => b.dataset.day), moments: picked('.rq__moments').map((b) => b.textContent),
-        prenom, tel, via, page: location.pathname, source: source(), site_web: f.site_web.value,
+        test: AB.nom, variant, soin: sel.value, soinNom: label(),
+        jours: [], moments: moment ? [moment] : [],
+        prenom, tel, via: 'Appel ou WhatsApp', page: location.pathname, source: source(), site_web: f.site_web.value,
       };
       let ok = false;
       if (AB.demo) { ok = true; rq.querySelector('.rq__alt').textContent = 'Aperçu : cette demande n’a été envoyée à personne.'; } else try {
         const r = await fetch((document.documentElement.dataset.base || '/') + 'api/demande', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) });
         ok = r.ok;
       } catch (x) {}
-      const sum = d.soinNom + ' · ' + (d.jours.join(', ') || 'dès que possible') + (d.moments.length ? ' · ' + d.moments.join(', ').toLowerCase() : '');
       if (!ok) {
-        // server unreachable (or preview without server): hand the request to WhatsApp so it is never lost
-        const txt = 'Bonjour, je souhaite un rendez-vous.\nSoin : ' + d.soinNom + '\nDisponibilités : ' + (d.jours.join(', ') || 'dès que possible') + (d.moments.length ? ' (' + d.moments.join(', ').toLowerCase() + ')' : '') + '\nPrénom : ' + prenom + '\nTéléphone : ' + tel + '\nRéponse par : ' + via;
+        // server unreachable: hand the request to WhatsApp so it is never lost
+        const txt = 'Bonjour, je souhaite un rendez-vous.\nSoin : ' + d.soinNom + (moment ? '\nPlutôt : ' + moment.toLowerCase() : '') + '\nPrénom : ' + prenom + '\nTéléphone : ' + tel;
         event('booking_request_fallback', { soin: d.soin });
         location.href = 'https://wa.me/33759543865?text=' + encodeURIComponent(txt);
-        go.disabled = false; go.textContent = 'Envoyer ma demande';
+        go.disabled = false; go.textContent = 'Être rappelé(e)';
         return;
       }
-      event('booking_request', { soin: d.soin, via, test: AB.nom, variant });
+      event('booking_request', { soin: d.soin, test: AB.nom, variant });
       if (window.fbq) fbq('track', 'Lead', { content_name: d.soin });
       store.set('sk_last_request', JSON.stringify({ at: Date.now(), soin: d.soin, src: source() }));
       rq.querySelector('.rq__name').textContent = prenom;
-      rq.querySelector('.rq__by').textContent = via === 'Appel' ? 'par téléphone' : 'par ' + via;
-      rq.querySelector('.rq__sum').textContent = sum;
+      rq.querySelector('.rq__sum').textContent = d.soinNom + (moment ? ' · ' + moment.toLowerCase() : '');
       rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__ok').hidden = false;
       rq.scrollIntoView({ block: 'center', behavior: 'smooth' });
     });
