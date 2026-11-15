@@ -230,8 +230,26 @@
   if (book && (AB.actif || forced)) { event('ab_variant', { test: AB.nom, variant }); toast('test A · version ' + variant); }
   const mountForm = () => {
     const tpl = document.querySelector('.rq-tpl'); if (!tpl) return false;
-    book.classList.add('book--rq'); book.innerHTML = ''; book.appendChild(tpl.content.cloneNode(true));
-    const rq = book.querySelector('.rq'), f = rq.querySelector('form'), sel = f.soin, err = rq.querySelector('.rq__err');
+    // Hybrid: Planity stays the default ("Réserver en ligne"), the call-back form is a second, clearly labelled option.
+    const tabs = document.createElement('div'); tabs.className = 'bk-tabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Choisissez comment réserver');
+    tabs.innerHTML = '<button type="button" role="tab" aria-selected="true" data-t="planity"><b>Réserver en ligne</b><span>Choisissez votre créneau · via Planity</span></button>'
+      + '<button type="button" role="tab" aria-selected="false" data-t="rappel"><b>Être rappelé(e)</b><span>Sans compte · 20 secondes</span></button>';
+    const wrap = document.createElement('div'); wrap.className = 'rq-wrap'; wrap.hidden = true; wrap.appendChild(tpl.content.cloneNode(true));
+    book.parentNode.insertBefore(tabs, book); book.parentNode.insertBefore(wrap, book.nextSibling);
+    const show = (t, why) => {
+      tabs.querySelectorAll('[role=tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.t === t)));
+      book.hidden = t !== 'planity'; wrap.hidden = t === 'planity';
+      event(t === 'rappel' ? 'booking_tab_rappel' : 'booking_tab_planity', { via: why || 'onglet' });
+    };
+    tabs.addEventListener('click', (e) => { const b = e.target.closest('[role=tab]'); if (b && b.getAttribute('aria-selected') !== 'true') show(b.dataset.t); });
+    // the "no account?" bar under the module (highlighted at Planity's sign-in step) also offers the call-back
+    const fbb = document.querySelector('.book-fb .book-fb__b');
+    if (fbb) {
+      const x = document.createElement('button'); x.type = 'button'; x.className = 'btn btn--light'; x.textContent = 'Être rappelé(e)';
+      x.addEventListener('click', () => { show('rappel', 'barre'); tabs.scrollIntoView({ block: 'start', behavior: 'smooth' }); });
+      fbb.prepend(x);
+    }
+    const rq = wrap.querySelector('.rq'), f = rq.querySelector('form'), sel = f.soin, err = rq.querySelector('.rq__err');
     // treatment known from the page: show it as one line with "Changer"; otherwise show the list
     const row = rq.querySelector('.rq__soin'), nom = rq.querySelector('.rq__soin-nom');
     const label = () => sel.options[sel.selectedIndex].text;
@@ -277,14 +295,8 @@
       store.set('sk_last_request', JSON.stringify({ at: Date.now(), soin: d.soin, src: source() }));
       rq.querySelector('.rq__name').textContent = prenom;
       rq.querySelector('.rq__sum').textContent = d.soinNom + (moment ? ' · ' + moment.toLowerCase() : '');
-      rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__planity').hidden = true; rq.querySelector('.rq__ok').hidden = false;
+      rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__ok').hidden = false;
       rq.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    });
-    rq.querySelector('.rq__planity').addEventListener('click', () => {
-      event('booking_switch_planity', { soin: sel.value });
-      book.innerHTML = '<div class="book__wait"><p>Chargement des disponibilités…</p></div>';
-      startPlanity(true);
-      book.scrollIntoView({ block: 'start', behavior: 'smooth' });
     });
     event('view_booking', { variant: 'form' });
     return true;
@@ -318,7 +330,7 @@
   }
 
   if (book && variant === 'form' && !mountForm()) variant = 'planity';
-  if (book && variant === 'planity') startPlanity(false);
+  if (book) startPlanity(false); // both versions show Planity; the hybrid adds the call-back tab
 
   /* 5. Journal filters */
   const filters = document.querySelectorAll('.filters button');
