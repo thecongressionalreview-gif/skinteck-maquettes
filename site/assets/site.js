@@ -214,7 +214,81 @@
     };
     new MutationObserver(check).observe(book, { childList: true, subtree: true, characterData: true });
   };
-  if (book) {
+  /* 4c. Test A (content/abtest.json): part of the visitors get a simple request form instead of Planity.
+     The version is drawn once and kept in this browser, so a visitor always sees the same one.
+     ?ab=form or ?ab=planity forces a version (for checking), without changing the stored draw. */
+  const AB = T.ab || {};
+  let variant = 'planity';
+  const forced = qs.get('ab');
+  if (forced === 'form' || forced === 'planity') variant = forced;
+  else if (AB.actif && book) {
+    const k = 'sk_ab_' + AB.nom;
+    let v = store.get(k);
+    if (v !== 'form' && v !== 'planity') { v = Math.random() < (AB.part == null ? 0.5 : AB.part) ? 'form' : 'planity'; store.set(k, v); }
+    variant = v;
+  }
+  if (book && (AB.actif || forced)) { event('ab_variant', { test: AB.nom, variant }); toast('test A · version ' + variant); }
+  const mountForm = () => {
+    const tpl = document.querySelector('.rq-tpl'); if (!tpl) return false;
+    book.classList.add('book--rq'); book.innerHTML = ''; book.appendChild(tpl.content.cloneNode(true));
+    const rq = book.querySelector('.rq'), f = rq.querySelector('form'), sel = f.soin, err = rq.querySelector('.rq__err');
+    if (want && sel.querySelector('option[value="' + want + '"]')) sel.value = want;
+    const J = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'], M = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+    const days = rq.querySelector('.rq__days');
+    for (let d = new Date(), n = 0; n < 8;) {
+      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+      if (d.getDay() === 0) continue; n++;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'rqc'; b.setAttribute('aria-pressed', 'false');
+      b.dataset.day = J[d.getDay()] + ' ' + d.getDate() + ' ' + M[d.getMonth()];
+      b.innerHTML = J[d.getDay()] + '<small>' + d.getDate() + ' ' + M[d.getMonth()] + '</small>';
+      days.appendChild(b);
+    }
+    const flip = (b) => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
+    rq.querySelectorAll('.rq__chips').forEach((g) => g.addEventListener('click', (e) => { const b = e.target.closest('.rqc'); if (b) flip(b); }));
+    rq.querySelector('.rq__via').addEventListener('click', (e) => { const b = e.target.closest('.rqc'); if (!b) return; rq.querySelectorAll('.rq__via .rqc').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
+    const picked = (q) => [...rq.querySelectorAll(q + ' [aria-pressed=true]')];
+    let started = false;
+    f.addEventListener('input', () => { err.hidden = true; if (!started) { started = true; event('booking_request_start', { soin: sel.value }); } });
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const tel = f.tel.value.trim(), prenom = f.prenom.value.trim();
+      const bad = !prenom ? 'Indiquez votre prénom.' : (tel.replace(/\D/g, '').length < 9 ? 'Indiquez un numéro de téléphone valide.' : '');
+      err.hidden = !bad; err.textContent = bad; if (bad) return;
+      const go = f.querySelector('.rq__go'); go.disabled = true; go.textContent = 'Envoi…';
+      const via = (picked('.rq__via')[0] || {}).dataset?.via || 'Appel';
+      const d = {
+        test: AB.nom, variant, soin: sel.value, soinNom: sel.options[sel.selectedIndex].text,
+        jours: picked('.rq__days').map((b) => b.dataset.day), moments: picked('.rq__moments').map((b) => b.textContent),
+        prenom, tel, via, page: location.pathname, source: source(), site_web: f.site_web.value,
+      };
+      let ok = false;
+      if (AB.demo) { ok = true; rq.querySelector('.rq__alt').textContent = 'Aperçu : cette demande n’a été envoyée à personne.'; } else try {
+        const r = await fetch((document.documentElement.dataset.base || '/') + 'api/demande', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) });
+        ok = r.ok;
+      } catch (x) {}
+      const sum = d.soinNom + ' · ' + (d.jours.join(', ') || 'dès que possible') + (d.moments.length ? ' · ' + d.moments.join(', ').toLowerCase() : '');
+      if (!ok) {
+        // server unreachable (or preview without server): hand the request to WhatsApp so it is never lost
+        const txt = 'Bonjour, je souhaite un rendez-vous.\nSoin : ' + d.soinNom + '\nDisponibilités : ' + (d.jours.join(', ') || 'dès que possible') + (d.moments.length ? ' (' + d.moments.join(', ').toLowerCase() + ')' : '') + '\nPrénom : ' + prenom + '\nTéléphone : ' + tel + '\nRéponse par : ' + via;
+        event('booking_request_fallback', { soin: d.soin });
+        location.href = 'https://wa.me/33759543865?text=' + encodeURIComponent(txt);
+        go.disabled = false; go.textContent = 'Envoyer ma demande';
+        return;
+      }
+      event('booking_request', { soin: d.soin, via, test: AB.nom, variant });
+      if (window.fbq) fbq('track', 'Lead', { content_name: d.soin });
+      store.set('sk_last_request', JSON.stringify({ at: Date.now(), soin: d.soin, src: source() }));
+      rq.querySelector('.rq__name').textContent = prenom;
+      rq.querySelector('.rq__by').textContent = via === 'Appel' ? 'par téléphone' : 'par ' + via;
+      rq.querySelector('.rq__sum').textContent = sum;
+      rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__ok').hidden = false;
+      rq.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    event('view_booking', { variant: 'form' });
+    return true;
+  };
+  if (book && variant === 'form' && !mountForm()) variant = 'planity';
+  if (book && variant === 'planity') {
     watchFunnel();
     const key = book.dataset.planity;
     if (preset) {
