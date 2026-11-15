@@ -192,3 +192,4 @@
 .rq__chg{font:inherit;font-size:15px;color:var(--link);background:none;border:0;cursor:pointer;padding:0}
 .rq__moments{align-items:center;margin-top:4px}.rq__moments>span{font-size:15px;color:var(--muted);margin-right:2px}.rq__moments>span small{font-size:13px}
 .rq__go{margin-top:8px}
+.rq__planity{font:inherit;font-size:15px;color:var(--muted);background:none;border:0;border-top:1px solid var(--line);margin-top:10px;padding:16px 0 0;cursor:pointer;text-align:center;line-height:1.4}.rq__planity span{color:var(--link);text-decoration:underline;white-space:nowrap}

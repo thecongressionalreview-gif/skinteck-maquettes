@@ -277,14 +277,20 @@
       store.set('sk_last_request', JSON.stringify({ at: Date.now(), soin: d.soin, src: source() }));
       rq.querySelector('.rq__name').textContent = prenom;
       rq.querySelector('.rq__sum').textContent = d.soinNom + (moment ? ' · ' + moment.toLowerCase() : '');
-      rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__ok').hidden = false;
+      rq.querySelector('.rq__head').hidden = true; f.hidden = true; rq.querySelector('.rq__planity').hidden = true; rq.querySelector('.rq__ok').hidden = false;
       rq.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    rq.querySelector('.rq__planity').addEventListener('click', () => {
+      event('booking_switch_planity', { soin: sel.value });
+      book.innerHTML = '<div class="book__wait"><p>Chargement des disponibilités…</p></div>';
+      startPlanity(true);
+      book.scrollIntoView({ block: 'start', behavior: 'smooth' });
     });
     event('view_booking', { variant: 'form' });
     return true;
   };
-  if (book && variant === 'form' && !mountForm()) variant = 'planity';
-  if (book && variant === 'planity') {
+  function startPlanity(now) {
+    book.classList.remove('book--rq');
     watchFunnel();
     const key = book.dataset.planity;
     if (preset) {
@@ -304,11 +310,15 @@
       add('https://d2skjte8udjqxw.cloudfront.net/widget/production/2/polyfills.latest.js', () => add('https://d2skjte8udjqxw.cloudfront.net/widget/production/2/app.latest.js'));
       event('view_booking');
     };
-    if ('IntersectionObserver' in window) {
+    if (now) go();
+    else if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '400px' });
       io.observe(book);
     } else go();
   }
+
+  if (book && variant === 'form' && !mountForm()) variant = 'planity';
+  if (book && variant === 'planity') startPlanity(false);
 
   /* 5. Journal filters */
   const filters = document.querySelectorAll('.filters button');
