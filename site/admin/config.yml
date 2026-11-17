@@ -1,0 +1,145 @@
+# Administration du site SKINTECK (Decap CMS) : skinteck-esthetique.fr/admin
+# Chaque enregistrement crée une modification dans le dépôt GitHub ; Cloudflare reconstruit
+# et met le site à jour automatiquement (1 à 2 minutes).
+backend:
+  name: test-repo
+locale: fr
+site_url: https://skinteck-esthetique.fr
+display_url: https://skinteck-esthetique.fr
+slug:
+  encoding: ascii
+  clean_accents: true
+media_folder: content/media
+public_folder: /skinteck-maquettes/site/le-blog/img
+
+collections:
+  - name: journal
+    label: Journal
+    label_singular: article
+    description: "Les articles du journal. Un article coché « Brouillon » n’apparaît pas sur le site."
+    folder: content/journal
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    identifier_field: titre
+    slug: "{{slug}}"
+    summary: "{{titre}} · {{date | date('DD/MM/YYYY')}}"
+    sortable_fields: [date, titre]
+    view_groups:
+      - { label: Catégorie, field: categories }
+    fields:
+      - { label: "Titre de l’article", name: titre, widget: string, hint: "Le grand titre affiché en haut de l’article." }
+      - { label: "Titre pour Google", name: titre_seo, widget: string, required: false, hint: "Laissez vide pour reprendre le titre de l’article. Idéalement 60 caractères maximum." }
+      - label: "Meta description (Google)"
+        name: description
+        widget: text
+        hint: "Le résumé affiché sous le titre dans Google. Entre 120 et 160 caractères."
+        pattern: ['^[\s\S]{70,170}$', "Entre 70 et 170 caractères (idéalement 120 à 160)."]
+      - { label: "Date de publication", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, picker_utc: true }
+      - label: "Catégories"
+        name: categories
+        widget: select
+        multiple: true
+        required: false
+        options: ["Diagnostic de peau", "Technologies esthétiques", "Imperfections cutanées", "Visage & relâchement", "Vieillissement cutané", "Densité capillaire", "Silhouette"]
+      - { label: "Image principale", name: image, widget: image, required: false, hint: "Utilisée sur la liste du journal et lors des partages. Format paysage, 2,5 Mo maximum." }
+      - { label: "Brouillon (non publié)", name: brouillon, widget: boolean, default: false, required: false }
+      - { label: "Adresse", name: url, widget: hidden, required: false }
+      - label: "Texte de l’article"
+        name: body
+        widget: markdown
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+        editor_components: [image]
+        hint: "Pour une image avec légende : bouton + puis Image, la légende va dans « Titre »."
+
+  - name: tarifs
+    label: Tarifs
+    description: "Planity reste la référence : modifiez ici les prix affichés sur le site quand ils changent sur Planity."
+    editor: { preview: false }
+    files:
+      - name: soins
+        label: "Tarifs des soins"
+        file: content/tarifs.json
+        fields:
+          - { name: _note, widget: hidden, required: false }
+          - label: "Soins"
+            name: soins
+            widget: list
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            collapsed: true
+            summary: "{{fields.nom}} · dès {{fields.depuis}}"
+            fields:
+              - { name: id, widget: hidden }
+              - { label: "Nom", name: nom, widget: string }
+              - { label: "Prix « dès … »", name: depuis, widget: string, required: false, hint: "Exemple : 95 €" }
+              - label: "Lignes du tableau"
+                name: lignes
+                widget: list
+                summary: "{{fields.libelle}} : {{fields.prix}}"
+                fields:
+                  - { label: "Prestation", name: libelle, widget: string }
+                  - { label: "Prix", name: prix, widget: string }
+              - { label: "Note sous le tableau", name: note, widget: string, required: false }
+      - name: laser
+        label: "Tarifs épilation laser"
+        file: content/tarifs-laser.json
+        fields:
+          - { name: _source, widget: hidden, required: false }
+          - label: "Zones"
+            name: zones
+            widget: list
+            summary: "{{fields.zone}} : {{fields.seance}} € / {{fields.forfait}} €"
+            fields:
+              - { label: "Zone", name: zone, widget: string }
+              - { label: "Prix 1 séance (€)", name: seance, widget: number, value_type: int, required: false }
+              - { label: "Forfait 6 séances (€)", name: forfait, widget: number, value_type: int, required: false }
+      - name: accueil
+        label: "Prix affichés sur l’accueil"
+        file: content/home-prix.json
+        fields:
+          - { name: _note, widget: hidden, required: false }
+          - label: "Lignes de prix"
+            name: lignes
+            widget: list
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            summary: "{{fields.affiche}}"
+            fields:
+              - { name: origine, widget: hidden }
+              - { label: "Texte affiché", name: affiche, widget: string, hint: "Pensez à le mettre à jour si vous changez le prix dans « Tarifs des soins »." }
+
+  - name: pages
+    label: "Textes des pages"
+    editor: { preview: false }
+    files:
+      - name: soins
+        label: "Pages soins : titres et introductions"
+        file: content/textes-soins.json
+        fields:
+          - { name: _note, widget: hidden, required: false }
+          - label: "Pages"
+            name: pages
+            widget: list
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            collapsed: true
+            summary: "{{fields.url}} · {{fields.h1}}"
+            fields:
+              - { name: url, widget: hidden }
+              - { label: "Sur-titre", name: kicker, widget: string, required: false }
+              - { label: "Titre de la page", name: h1, widget: string }
+              - { label: "Introduction", name: lead, widget: text }
+              - { label: "Titre du bloc « Pour qui ? »", name: pointsTitle, widget: string, required: false }
+              - label: "Points du bloc « Pour qui ? »"
+                name: points
+                widget: list
+                required: false
+                summary: "{{fields.titre}}"
+                fields:
+                  - { label: "Titre", name: titre, widget: string }
+                  - { label: "Texte", name: texte, widget: string }
