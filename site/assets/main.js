@@ -26,7 +26,7 @@
     lift: { img: 'lift', alt: 'Séance de HIFU sur le visage', tag: 'Visage · Fermeté', name: 'Retrouver un visage plus ferme.',
       text: 'Les traits tombent un peu, l’ovale est moins net, vous avez l’air fatigué. On commence par regarder où, et pourquoi.',
       adv: 'On analyse votre peau pour cibler les bonnes zones, ou pour vous dire si ce soin n’est pas le bon.',
-      proto: 'SKINTECK LIFT™ · HIFU (ultrasons focalisés) + LED', price: '1 zone 220 € · 2 zones 400 € · 3 zones 560 € · 4 zones 690 €', href: '/skinteck-maquettes/site/hifu', cta: 'Découvrir LIFT™' },
+      proto: 'SKINTECK LIFT™ · HIFU (ultrasons focalisés) + LED', price: 'Double menton / cou dès 220 € · Ovale 400 € · Ovale + cou 560 € · Global 690 €', href: '/skinteck-maquettes/site/hifu', cta: 'Découvrir LIFT™' },
     pure: { img: 'pure', alt: 'Hydrodermabrasion du visage', tag: 'Visage · Éclat', name: 'Retrouver une peau nette et lumineuse.',
       text: 'Pores visibles, teint gris, peau encombrée : votre peau manque de fraîcheur.',
       adv: 'Le nettoyage et les produits sont choisis selon ce que l’analyse montre de votre peau.',
